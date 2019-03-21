@@ -45,6 +45,7 @@ import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UserTile;
@@ -83,6 +84,7 @@ public class QSFactoryImpl implements QSFactory {
     // Additions
     private final Provider<AODTile> mAODTileProvider;
     private final Provider<ImmersiveTile> mImmersiveTileProvider;
+    private final Provider<SoundTile> mSoundTileProvider;
 
     private QSTileHost mHost;
 
@@ -107,7 +109,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<GarbageMonitor.MemoryTile> memoryTileProvider,
             Provider<UiModeNightTile> uiModeNightTileProvider,
             Provider<AODTile> aodTileProvider,
-            Provider<ImmersiveTile> immersiveTileProvider) {
+            Provider<ImmersiveTile> immersiveTileProvider,
+            Provider<SoundTile> soundTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -130,6 +133,7 @@ public class QSFactoryImpl implements QSFactory {
         //Additions
         mAODTileProvider = aodTileProvider;
         mImmersiveTileProvider = immersiveTileProvider;
+        mSoundTileProvider = soundTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -193,6 +197,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new CaffeineTile(mHost);
             case "immersive":
                 return mImmersiveTileProvider.get();
+            case "sound":
+                return mSoundTileProvider.get();
         }
 
         // Intent tiles.
