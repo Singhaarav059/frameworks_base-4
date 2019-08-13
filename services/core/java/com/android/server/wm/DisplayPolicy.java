@@ -178,7 +178,7 @@ import com.android.server.policy.WindowOrientationListener;
 import com.android.server.statusbar.StatusBarManagerInternal;
 import com.android.server.wallpaper.WallpaperManagerInternal;
 import com.android.server.wm.utils.InsetUtils;
-
+import android.provider.Settings;
 import java.io.PrintWriter;
 
 import com.android.internal.util.potato.NavbarUtils;
@@ -3659,10 +3659,12 @@ public class DisplayPolicy {
      */
     public void takeScreenshot(int screenshotType) {
         if (mScreenshotHelper != null) {
+            String packageName = mFocusedWindow == null ? "" : mFocusedWindow.getAttrs().packageName;
             mScreenshotHelper.takeScreenshot(screenshotType,
                     mStatusBar != null && mStatusBar.isVisibleLw(),
                     mNavigationBar != null && mNavigationBar.isVisibleLw(),
-                    mHandler, null /* completionConsumer */);
+                    mHandler, null /* completionConsumer */,
+                    packageName);
         }
     }
 
